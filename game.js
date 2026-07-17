@@ -1060,14 +1060,14 @@ function endGame() {
         // AAB, ABA, BAA и т.д.
         if (counts.A === 2) {
             if (counts.B === 1) {
-                title = "НАДЁЖНЫЙ УПРАВЛЕНЕЦ";
-                description = "Две метрики на высшем уровне, одна — на хорошем. Проект выполнен блестяще с минимальными компромиссами. Команда довольна, клиенты счастливы, начальство предлагает повышение.";
+                title = "A RELIABLE MANAGER";
+                description = "Two metrics are at the highest level, and one is good. The project was executed brilliantly with minimal compromises. The team is satisfied, the clients are happy, and management is offering a promotion..";
             } else if (counts.C === 1) {
-                title = "ПРАГМАТИЧНЫЙ ЛИДЕР";
-                description = "Две важнейшие метрики на высоте, но пришлось пожертвовать одной. Ты сделал правильный стратегический выбор, сфокусировавшись на главном.";
+                title = "A PRAGMATIC LEADER";
+                description = "The two most important metrics are on point, but you had to sacrifice one of them. You made the right strategic choice by focusing on what matters most.";
             } else if (counts.D === 1) {
-                title = "СТРАТЕГ-ЖЕРТВОВАТЕЛЬ";
-                description = "Ты сознательно принес в жертву одну метрику ради двух других. Жесткое, но эффективное решение в условиях ограниченных ресурсов.";
+                title = "THE STRATEGIST-SACRIFICE-MAKER";
+                description = "You deliberately sacrificed one metric for the sake of two others. It’s a tough but effective decision when resources are limited.";
             }
         } else if (counts.B === 2) {
             if (counts.A === 1) {
