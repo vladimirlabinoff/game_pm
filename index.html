@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PROJECT TRIAGE — Management in Times of Crisis</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Пиксельный курсор -->
+    <div class="pixel-cursor" id="pixel-cursor"></div>
+
+    <!-- Индикатор рейтинга -->
+    <div id="leaderboard-status" class="leaderboard-status" style="display: none;"></div>
+    
+    <!-- Главный контейнер -->
+    <div class="main-container">
+        <!-- ЭКРАН 1: Старт -->
+        <section id="start-screen" class="game-screen active">
+            <div class="screen-content start-content">
+                <div class="title-section">
+                    <h1 class="game-title">GAME OF</h1>
+                    <h1 class="game-title-sub">BALANCE</h1>
+                    <div class="subtitle">make the right decisions during a crisis</div>
+                    <div class="pixel-divider"></div>
+                </div>
+
+                <div class="compact-hero">
+                    <div class="compact-stats">
+                        <div class="compact-stat">
+                            <div class="stat-icon">💰</div>
+                            <div class="stat-main">1 000 000 ₽</div>
+                            <div class="stat-desc">This is your starting budget</div>
+                        </div>
+                        <div class="compact-stat">
+                            <div class="stat-icon">⚡</div>
+                            <div class="stat-main">15 CHALLENGES</div>
+                            <div class="stat-desc">There are so many critical situations that need to be resolved</div>
+                        </div>
+                        <div class="compact-stat">
+                            <div class="stat-icon">⚖️</div>
+                            <div class="stat-main">3 METRICS</div>
+                            <div class="stat-desc">Strike a balance between them</div>
+                        </div>
+                    </div>
+
+                    <div class="compact-rules">
+                        <div class="rule-line">
+                            <span class="rule-icon">⚠️</span>
+                            <span>Budget ≤ 0 = <strong>PROJECT BANKRUPTCY</strong></span>
+                        </div>
+                        <div class="rule-line">
+                            <span class="rule-icon">⚠️</span>
+                            <span>Mood ≤ 20% = <strong>THE TEAM IS SABOTAGING THE WORK</strong></span>
+                        </div>
+                        <div class="rule-line">
+                            <span class="rule-icon">⚠️</span>
+                            <span>Quality ≤ 30% = <strong>PRODUCT IS NON-VIABLE</strong></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="game-description">
+                    <p>Below are descriptions of situations—real-life challenges faced by an IT team leader.
+Choose one of the options, and it will instantly change your metrics. There’s no perfect path—only your ability to strike a balance and see the long-term consequences.
+As long as all three metrics remain above the critical threshold, the project is alive. Deliver the best result—and you’ll become a legend.</p>
+                </div>
+
+                <div class="cta-section">
+                    <div class="btn-container">
+                        <button id="start-game-btn" class="btn btn-primary btn-large pixel-btn">
+                            <span class="btn-text">START</span>
+                        </button>
+                    </div>
+                    <div class="hint-text">Use a mouse with a pixel cursor to select</div>
+                </div>
+                <div class="cta-section">
+                    <div class="btn-container">
+                              <button id="show-leaderboard-btn" class="btn btn-secondary btn-large pixel-btn" style="margin-left: 20px;">
+                                <span class="btn-text">LEADERBOARD</span>
+                        </button>
+                </div>
+    <div class="hint-text">Use a mouse with a pixel cursor to select</div>
+</div>
+            </div>
+        </section>
+
+         <!-- ЭКРАН 2: Ввод имени -->
+        <section id="name-screen" class="game-screen">
+            <div class="screen-content start-content">
+                <div class="title-section">
+                    <h2 class="game-title">ENTER YOUR NAME</h2>
+                    <div class="subtitle">for the leaderboard</div>
+                    <div class="pixel-divider"></div>
+                </div>
+
+                <div class="name-input-container">
+                    <input 
+                        type="text" 
+                        id="player-name"
+                        class="pixel-input"
+                        maxlength="15"
+                        placeholder="YOUR NICKNAME (up to 15 characters)"
+                        autocomplete="off"
+                        autofocus
+                    />
+                    <div class="input-hint">Everyone will see this name on the leaderboard</div>
+                    
+                    <div class="stats-preview">
+                        <div class="stat-preview">
+                            <span>Your rating:</span>
+                            <span id="preview-score">000</span>
+                        </div>
+                        <div class="stat-preview">
+                            <span>Your rank:</span>
+                            <span id="preview-rank">???</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="cta-section">
+                    <div class="btn-container">
+                        <button id="save-name-btn" class="btn btn-primary btn-large pixel-btn">
+                            <span class="btn-text">START</span>
+                        </button>
+                        <button id="back-to-menu-btn" class="btn btn-secondary pixel-btn" style="margin-left: 20px;">
+                            <span class="btn-text">BACK</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ЭКРАН 3: Игровой процесс -->
+        <section id="game-screen" class="game-screen">
+            <div class="screen-content compact-game">
+                <!-- Верхняя панель: метрики + прогресс -->
+                <div class="top-panel">
+                    <!-- Метрики в строку -->
+                    <div class="compact-metrics">
+                        <div class="compact-metric budget">
+                            <div class="metric-header">
+                                <span class="metric-label">BUDGET</span>
+                                <span id="budget-value" class="metric-value">1 000 000 ₽</span>
+                            </div>
+                            <div class="metric-bar-container">
+                                <div id="budget-bar" class="metric-bar good" style="width: 67%"></div>
+                            </div>
+                            <div class="metric-warning">CRITICAL: 0 ₽</div>
+                        </div>
+                        
+                        <div class="compact-metric atmosphere">
+                            <div class="metric-header">
+                                <span class="metric-label">MOOD</span>
+                                <span id="atmosphere-value" class="metric-value">75%</span>
+                            </div>
+                            <div class="metric-bar-container">
+                                <div id="atmosphere-bar" class="metric-bar good" style="width: 75%"></div>
+                            </div>
+                            <div class="metric-warning">CRITICAL: 20%</div>
+                        </div>
+                        
+                        <div class="compact-metric quality">
+                            <div class="metric-header">
+                                <span class="metric-label">QUALITY</span>
+                                <span id="quality-value" class="metric-value">80%</span>
+                            </div>
+                            <div class="metric-bar-container">
+                                <div id="quality-bar" class="metric-bar good" style="width: 80%"></div>
+                            </div>
+                            <div class="metric-warning">CRITICAL: 30%</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Прогресс -->
+                    <div class="compact-progress">
+                        <div class="progress-info">
+                            <span class="progress-label">CHALLENGE</span>
+                            <span class="progress-numbers">
+                                <span id="current-situation">1</span>/<span id="total-situations">15</span>
+                            </span>
+                        </div>
+                        <div class="progress-visual">
+                            <div class="progress-bar-container">
+                                <div id="progress-bar" class="progress-bar" style="width: 7%"></div>
+                            </div>
+                            <div class="progress-steps">
+                                <div class="step-dot active"></div>
+                                <div class="step-dot"></div>
+                                <div class="step-dot"></div>
+                                <div class="step-dot"></div>
+                                <div class="step-dot"></div>
+                                <div class="step-dot"></div>
+                                <div class="step-dot"></div>
+                                <div class="step-dot"></div>
+                                <div class="step-dot"></div>
+                                <div class="step-dot"></div>
+                                <div class="step-dot"></div>
+                                <div class="step-dot"></div>
+                                <div class="step-dot"></div>
+                                <div class="step-dot"></div>
+                                <div class="step-dot"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Основной контент: ситуация + выборы -->
+                <div class="game-content">
+                    <!-- Ситуация -->
+                    <div class="situation-box">
+                        <div class="situation-header">
+                            <div class="crisis-badge">CHALLENGE #<span id="crisis-number">1</span></div>
+                            <h3 id="situation-title">The Technological Divide</h3>
+                        </div>
+                        <div class="situation-text" id="situation-text">
+                             The project is just getting started. Your former lead developer is insisting on using outdated technology—he claims it will speed up the launch by a factor of two. The younger developers are pushing for a modern tech stack, threatening to quit.
+                        </div>
+                    </div>
+                    
+                    <!-- Варианты выбора -->
+                    <div class="choices-box" id="choices-container">
+                        <!-- Варианты загружаются через JS -->
+                    </div>
+                </div>
+
+                <!-- Панель последствий -->
+                <div id="consequence-panel" class="consequence-panel" style="display: none;">
+                    <div class="consequence-header">
+                        <h4>RESULT OF THE DECISION</h4>
+                        <div class="consequence-metrics" id="consequence-metrics"></div>
+                    </div>
+                    <p id="consequence-text" class="consequence-text"></p>
+                    <div class="consequence-actions">
+                        <button id="next-situation-btn" class="btn btn-primary pixel-btn">
+                            <span class="btn-text">THE NEXT CHALLENGE</span>
+                            <span class="btn-icon">→</span>
+                        </button>
+                    </div>
+                    <div class="consequence-note">The decision has been made. It cannot be changed.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ЭКРАН 4: Победа -->
+        <section id="win-screen" class="game-screen">
+            <div class="screen-content result-content">
+                <div class="result-header">
+                    <h2 class="result-title">🏆 THE PROJECT HAS BEEN SUCCESSFULLY COMPLETED</h2>
+                    <div class="result-rank">
+                        <span id="final-rank" class="rank-badge">AAA</span>
+                    </div>
+                    <h3 id="result-player-title" class="player-title">A LEGENDARY LEADER</h3>
+                </div>
+
+                <div class="result-description">
+                    <p id="result-description">
+                        You successfully steered the project through all the challenges! You struck the perfect balance between the budget, the team, and product quality.
+                    </p>
+                </div>
+
+                <div class="compact-results">
+                    <div class="result-metric">
+                        <span class="result-label">BUDGET</span>
+                        <span id="final-budget" class="result-value">1 000 000 ₽</span>
+                    </div>
+                    <div class="result-metric">
+                        <span class="result-label">MOOD</span>
+                        <span id="final-atmosphere" class="result-value">75%</span>
+                    </div>
+                    <div class="result-metric">
+                        <span class="result-label">QUALITY</span>
+                        <span id="final-quality" class="result-value">80%</span>
+                    </div>
+                </div>
+
+               <div id="rank-details" class="rank-details">
+                <!-- Детали рангов будут вставлены здесь динамически -->
+                </div> 
+
+                <div class="result-quote">
+                    <div class="quote-text">“A good leader isn't someone who avoids problems, but someone who solves them effectively.”</div>
+                </div>
+
+                <div class="result-actions">
+                    <button id="play-again-btn" class="btn btn-primary pixel-btn">
+                        <span class="btn-text">NEW GAME</span>
+                    </button>
+                    <button id="back-to-menu-btn" class="btn btn-secondary pixel-btn">
+                        <span class="btn-text">MAIN MENU</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ЭКРАН 5: Провал -->
+        <section id="fail-screen" class="game-screen">
+            <div class="screen-content result-content fail-content">
+                <div class="result-header">
+                    <h2 class="result-title">💥 PROJECT STOPPED</h2>
+                    <h3 id="fail-title" class="player-title">BANKRUPTCY</h3>
+                </div>
+
+                <div class="result-description">
+                    <p id="fail-description">
+                        The project is operating at a loss. The budget has been exhausted. The critical situation makes it impossible to continue the work.
+                    </p>
+                </div>
+
+                <div class="compact-results">
+                    <div class="result-metric">
+                        <span class="result-label">BUDGET</span>
+                        <span id="fail-budget" class="result-value">0 ₽</span>
+                    </div>
+                    <div class="result-metric">
+                        <span class="result-label">MOOD</span>
+                        <span id="fail-atmosphere" class="result-value">50%</span>
+                    </div>
+                    <div class="result-metric">
+                        <span class="result-label">QUALITY</span>
+                        <span id="fail-quality" class="result-value">65%</span>
+                    </div>
+                </div>
+
+                <div class="fail-details" id="fail-details">
+                    <h4>REASON FOR THE STOP</h4>
+                    <p>We were unable to maintain a balance among key performance indicators. The project requires a strategic review.</p>
+                </div>
+
+                <div class="result-quote">
+                    <div class="quote-text">“Failure is an opportunity to start over, but this time with more wisdom.”</div>
+                </div>
+
+                <div class="result-actions">
+                    <button id="restart-fail-btn" class="btn btn-primary pixel-btn">
+                        <span class="btn-text">START AGAIN</span>
+                    </button>
+                    <button id="menu-from-fail-btn" class="btn btn-secondary pixel-btn">
+                        <span class="btn-text">MAIN MENU</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+        <!-- ЭКРАН 6: Рейтинг -->
+        <section id="leaderboard-screen" class="game-screen">
+            <div class="screen-content result-content">
+                <div class="result-header">
+                    <h2 class="result-title">🏆 LEADERBOARD</h2>
+                    <div class="pixel-divider"></div>
+                </div>
+
+                <div class="leaderboard-stats">
+                    <div class="stat-item">
+                        <span class="stat-label">Total number of players:</span>
+                        <span id="total-players" class="stat-value">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Average score:</span>
+                        <span id="average-score" class="stat-value">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Record:</span>
+                        <span id="top-score" class="stat-value">0</span>
+                    </div>
+                </div>
+                <!-- Внутри #leaderboard-screen, после .leaderboard-stats добавьте: -->
+<div id="last-result-summary" class="last-result" style="display: none; margin: 20px 0; padding: 15px; background: var(--bg-panel); border: 2px solid var(--primary-green); border-radius: 8px;">
+    <h4 style="color: var(--primary-green); font-family: var(--font-pixel); margin-bottom: 10px;">YOUR LATEST RESULT</h4>
+    <div class="last-result-stats" style="display: flex; justify-content: space-around;">
+        <div class="last-stat">
+            <div style="font-size: 12px; color: var(--text-dim);">Score:</div>
+            <div id="last-score" style="font-family: var(--font-pixel); color: var(--primary-green); font-size: 18px;">0</div>
+        </div>
+        <div class="last-stat">
+            <div style="font-size: 12px; color: var(--text-dim);">Rank:</div>
+            <div id="last-rank" style="font-family: var(--font-pixel); color: var(--primary-yellow); font-size: 18px;">AAA</div>
+        </div>
+    </div>
+</div>
+                <div class="leaderboard-container">
+                    <div class="leaderboard-header">
+                        <span class="header-rank">#</span>
+                        <span class="header-name">PLAYER</span>
+                        <span class="header-score">SCORE</span>
+                        <span class="header-date">DATE</span>
+                    </div>
+                    
+                    <div id="leaderboard-list" class="leaderboard-list">
+                        <div class="loading-scores">
+                            <div class="loading-spinner"></div>
+                            <div>Loading records...</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="result-quote">
+                    <div class="quote-text">“Great leaders create more leaders, not followers.”</div>
+                </div>
+
+                <div class="result-actions">
+                    <button id="play-again-leaderboard" class="btn btn-primary pixel-btn">
+                        <span class="btn-text">NEW GAME</span>
+                    </button>
+                    <button id="back-to-menu-lb" class="btn btn-secondary pixel-btn">
+                        <span class="btn-text">MAIN MENU</span>
+                    </button>
+                    <button id="refresh-leaderboard" class="btn btn-secondary pixel-btn">
+                        <span class="btn-text">REFRESH</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Скрипты -->
+    <script src="leaderboard.js"></script>
+    <script src="game.js"></script>
+</body>
+</html>
+  
