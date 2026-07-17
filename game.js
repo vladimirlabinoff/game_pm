@@ -638,7 +638,7 @@ function showConsequences(choice) {
         const className = choice.consequences.budget > 0 ? 'positive' : 'negative';
         const sign = choice.consequences.budget > 0 ? '+' : '';
         metricsHTML += `<div class="consequence-metric ${className}">
-            💰 БЮДЖЕТ: ${sign}${choice.consequences.budget.toLocaleString('ru-RU')} ₽
+            💰 BUDGET: ${sign}${choice.consequences.budget.toLocaleString('ru-RU')} ₽
         </div>`;
     }
     
@@ -646,7 +646,7 @@ function showConsequences(choice) {
         const className = choice.consequences.atmosphere > 0 ? 'positive' : 'negative';
         const sign = choice.consequences.atmosphere > 0 ? '+' : '';
         metricsHTML += `<div class="consequence-metric ${className}">
-            👥 АТМОСФЕРА: ${sign}${choice.consequences.atmosphere}%
+            👥 MOOD: ${sign}${choice.consequences.atmosphere}%
         </div>`;
     }
     
@@ -654,7 +654,7 @@ function showConsequences(choice) {
         const className = choice.consequences.quality > 0 ? 'positive' : 'negative';
         const sign = choice.consequences.quality > 0 ? '+' : '';
         metricsHTML += `<div class="consequence-metric ${className}">
-            🛠️ КАЧЕСТВО: ${sign}${choice.consequences.quality}%
+            🛠️ QUALITY: ${sign}${choice.consequences.quality}%
         </div>`;
     }
     
@@ -807,12 +807,12 @@ function savePlayerNameAndStart() {
     const name = input.value.trim();
     
     if (name.length === 0) {
-        showNotification('Пожалуйста, введите имя!', 'warning');
+        showNotification('Please enter your name!', 'warning');
         return;
     }
     
     if (name.length > 15) {
-        showNotification('Имя не должно превышать 15 символов!', 'warning');
+        showNotification('The name must not exceed 15 characters!', 'warning');
         return;
     }
     
@@ -835,7 +835,7 @@ async function showLeaderboard() {
         listElement.innerHTML = `
             <div class="loading-scores">
                 <div class="loading-spinner"></div>
-                <div>Загрузка рекордов...</div>
+                <div>Loading records...</div>
             </div>
         `;
     }
